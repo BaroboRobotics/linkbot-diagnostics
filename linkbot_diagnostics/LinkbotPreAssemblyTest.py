@@ -266,6 +266,8 @@ class StartQT4(QtGui.QMainWindow):
         try:
             dialog = dialogClass(self)
         except Exception as e:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot: " + str(e) )
             print(e)
             return
         dialog.exec_()
@@ -286,10 +288,16 @@ class StartQT4(QtGui.QMainWindow):
         self.runDialog(MotorDialog)
 
     def beep(self):
-        l = linkbot.Linkbot()
-        l.setBuzzerFrequency(440)
-        time.sleep(0.5)
-        l.setBuzzerFrequency(0)
+        try:
+            l = linkbot.Linkbot()
+            l.setBuzzerFrequency(440)
+            time.sleep(0.5)
+            l.setBuzzerFrequency(0)
+        except Exception as e:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot: " + str(e) )
+            print(e)
+            return
 
     def close(self):
         QtCore.QCoreApplication.instance().quit()
