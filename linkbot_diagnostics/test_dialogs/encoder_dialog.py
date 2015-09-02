@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'encoder_dialog.ui'
 #
-# Created: Wed Sep  2 14:46:09 2015
+# Created: Wed Sep  2 15:23:45 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,6 +34,7 @@ class Ui_Dialog_encoder(object):
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.verticalSlider_1 = QtGui.QSlider(self.groupBox)
+        self.verticalSlider_1.setMaximum(360)
         self.verticalSlider_1.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider_1.setObjectName(_fromUtf8("verticalSlider_1"))
         self.verticalLayout_3.addWidget(self.verticalSlider_1)
@@ -46,6 +47,7 @@ class Ui_Dialog_encoder(object):
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.verticalSlider_2 = QtGui.QSlider(self.groupBox_2)
+        self.verticalSlider_2.setMaximum(360)
         self.verticalSlider_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider_2.setObjectName(_fromUtf8("verticalSlider_2"))
         self.verticalLayout_2.addWidget(self.verticalSlider_2)
@@ -62,6 +64,9 @@ class Ui_Dialog_encoder(object):
         self.verticalLayout = QtGui.QVBoxLayout(self.groupBox_3)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.verticalSlider_3 = QtGui.QSlider(self.groupBox_3)
+        self.verticalSlider_3.setMaximum(360)
+        self.verticalSlider_3.setPageStep(10)
+        self.verticalSlider_3.setProperty("value", 0)
         self.verticalSlider_3.setOrientation(QtCore.Qt.Vertical)
         self.verticalSlider_3.setObjectName(_fromUtf8("verticalSlider_3"))
         self.verticalLayout.addWidget(self.verticalSlider_3)

@@ -22,6 +22,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QSlider" name="verticalSlider_1">
+        <property name="maximum">
+         <number>360</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -45,6 +48,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QSlider" name="verticalSlider_2">
+        <property name="maximum">
+         <number>360</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -78,6 +84,15 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QSlider" name="verticalSlider_3">
+        <property name="maximum">
+         <number>360</number>
+        </property>
+        <property name="pageStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>

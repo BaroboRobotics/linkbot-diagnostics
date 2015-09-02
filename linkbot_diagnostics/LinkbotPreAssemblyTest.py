@@ -25,6 +25,11 @@ try:
 except:
     from linkbot_diagnostics.test_dialogs.encoder_dialog import Ui_Dialog_encoder
 
+try:
+    from test_dialogs.button_dialog import Ui_Dialog_button
+except:
+    from linkbot_diagnostics.test_dialogs.button_dialog import Ui_Dialog_button
+
 class LedDialog(QtGui.QDialog):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -54,6 +59,42 @@ class LedDialog(QtGui.QDialog):
         self.ui.stackedWidget.setCurrentIndex(2)
 
     def next3(self):
+        self.done(0)
+
+class ButtonDialog(QtGui.QDialog):
+    buttonSignal = QtCore.pyqtSignal(int, int, int)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_Dialog_button()
+        self.ui.setupUi(self)
+
+        try:
+            self.linkbot = linkbot.Linkbot()
+        except:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot. Please make sure the Linkbot is "
+                "plugged into the computer with a working Micro-USB cable." )
+            raise 
+
+        self.ui.pushButton.clicked.connect(self.close)
+
+        self.linkbot.enableButtonEvents(self._buttonEvent)
+        self.buttonSignal.connect(self.buttonEvent)
+
+    def buttonEvent(self, button, state, timestamp):
+        checkboxes = [ self.ui.checkBox_1,
+                       self.ui.checkBox_2,
+                       self.ui.checkBox_3, ]
+        if state:
+            checkboxes[button].setChecked(True)
+        else:
+            checkboxes[button].setChecked(False)
+
+    def _buttonEvent(self, button, state, timestamp):
+        self.buttonSignal.emit(button, state, timestamp)
+
+    def close(self):
         self.done(0)
 
 class EncoderDialog(QtGui.QDialog):
@@ -118,26 +159,25 @@ class StartQT4(QtGui.QMainWindow):
 
         # Connect buttons
         self.ui.pushButton_led.clicked.connect(self.runLedTest)
+        self.ui.pushButton_buttons.clicked.connect(self.runButtonTest)
         self.ui.pushButton_encoders.clicked.connect(self.runEncoderTest)
 
-    def runLedTest(self):
-        # Show the Led Dialog
+    def runDialog(self, dialogClass):
         try:
-            dialog = LedDialog(self)
+            dialog = dialogClass(self)
         except Exception as e:
             print(e)
             return
         dialog.exec_()
+
+    def runLedTest(self):
+        self.runDialog(LedDialog)
 
     def runEncoderTest(self):
-        # Show the Encoder Dialog
-        try:
-            dialog = EncoderDialog(self)
-        except Exception as e:
-            print(e)
-            return
-        dialog.exec_()
+        self.runDialog(EncoderDialog)
 
+    def runButtonTest(self):
+        self.runDialog(ButtonDialog)
 
 def main():
     app = QtGui.QApplication(sys.argv)
