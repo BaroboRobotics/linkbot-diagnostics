@@ -7,13 +7,14 @@ version = '0.0.1'
 
 setup(
     name = "linkbot_diagnostics",
-    packages = ["linkbot_diagnostics", ],
+    packages = ["linkbot_diagnostics", 'linkbot_diagnostics.test_dialogs'],
     version = version,
     entry_points = {
         "console_scripts":
         [
          'linkbot-diagnostics=linkbot_diagnostics.LinkbotDiagnosticGui:main',
          'linkbot-diagnostics-summary=linkbot_diagnostics.MassageData:main',
+         'linkbot-diagnostics-preassembly=linkbot_diagnostics.LinkbotPreAssemblyTest:main',
         ]
     },
     install_requires = ["PyLinkbot >= 2.3.4", "appdirs"],
