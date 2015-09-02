@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 
 import linkbot
-try:
-    from testlinkbot import TestLinkbot
-except:
-    from linkbot_diagnostics.testlinkbot import TestLinkbot
-        
 import time
 import sys
 from PyQt4 import QtCore, QtGui
