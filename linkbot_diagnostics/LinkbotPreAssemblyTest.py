@@ -20,6 +20,11 @@ try:
 except:
     from linkbot_diagnostics.test_dialogs.led_dialog import Ui_Dialog_led
 
+try:
+    from test_dialogs.encoder_dialog import Ui_Dialog_encoder
+except:
+    from linkbot_diagnostics.test_dialogs.encoder_dialog import Ui_Dialog_encoder
+
 class LedDialog(QtGui.QDialog):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,7 +55,60 @@ class LedDialog(QtGui.QDialog):
 
     def next3(self):
         self.done(0)
+
+class EncoderDialog(QtGui.QDialog):
+    encoderSignal = QtCore.pyqtSignal(int, float, int)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_Dialog_encoder()
+        self.ui.setupUi(self)
     
+        try:
+            self.linkbot = linkbot.Linkbot()
+        except:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot. Please make sure the Linkbot is "
+                "plugged into the computer with a working Micro-USB cable." )
+            raise 
+
+        for slider in ( self.ui.verticalSlider_1,
+                        self.ui.verticalSlider_2,
+                        self.ui.verticalSlider_3, ):
+            slider.setMaximum(360)
+
+        # Connect button
+        self.ui.pushButton.clicked.connect(self.close)
+
+        # Connect encoder callbacks
+        self.linkbot.enableEncoderEvents(5, self.encoderEvent)
+        self.encoderSignal.connect(self.processEncoderEvent)
+
+    def encoderEvent(self, n, angle, timestamp):
+        self.encoderSignal.emit(n, angle, timestamp)
+
+    def processEncoderEvent(self, n, angle, timestamp):
+        def normalizeAngle(theta):
+            while theta > 360:
+                theta -= 360
+            while theta < 0:
+                theta += 360
+            return theta
+        angle_ = angle
+        angle = normalizeAngle(angle)
+        if n == 1:
+            self.ui.verticalSlider_1.setValue(angle)
+            self.ui.label_1.setText('{0:.2f}'.format(angle_))
+        elif n == 2:
+            self.ui.verticalSlider_2.setValue(angle)
+            self.ui.label_2.setText('{0:.2f}'.format(angle_))
+        elif n == 3:
+            self.ui.verticalSlider_3.setValue(angle)
+            self.ui.label_3.setText('{0:.2f}'.format(angle_))
+
+    def close(self):
+        self.done(0)
+
 class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -60,15 +118,25 @@ class StartQT4(QtGui.QMainWindow):
 
         # Connect buttons
         self.ui.pushButton_led.clicked.connect(self.runLedTest)
+        self.ui.pushButton_encoders.clicked.connect(self.runEncoderTest)
 
     def runLedTest(self):
         # Show the Led Dialog
         try:
-            self.ledDialog = LedDialog(self)
+            dialog = LedDialog(self)
         except Exception as e:
             print(e)
             return
-        self.ledDialog.exec_()
+        dialog.exec_()
+
+    def runEncoderTest(self):
+        # Show the Encoder Dialog
+        try:
+            dialog = EncoderDialog(self)
+        except Exception as e:
+            print(e)
+            return
+        dialog.exec_()
 
 
 def main():
