@@ -258,6 +258,9 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.pushButton_accelerometer.clicked.connect(self.runAccelerometerTest)
         self.ui.pushButton_encoders.clicked.connect(self.runEncoderTest)
         self.ui.pushButton_motors.clicked.connect(self.runMotorTest)
+        self.ui.pushButton_buzzer.clicked.connect(self.beep)
+        self.ui.pushButton_quit.clicked.connect(self.close)
+        self.ui.actionQuit.triggered.connect(self.close)
 
     def runDialog(self, dialogClass):
         try:
@@ -281,6 +284,15 @@ class StartQT4(QtGui.QMainWindow):
 
     def runMotorTest(self):
         self.runDialog(MotorDialog)
+
+    def beep(self):
+        l = linkbot.Linkbot()
+        l.setBuzzerFrequency(440)
+        time.sleep(0.5)
+        l.setBuzzerFrequency(0)
+
+    def close(self):
+        QtCore.QCoreApplication.instance().quit()
 
 def main():
     app = QtGui.QApplication(sys.argv)

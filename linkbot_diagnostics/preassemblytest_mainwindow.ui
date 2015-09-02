@@ -51,7 +51,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButton_buzzer">
       <property name="text">
        <string>Beep Buzzer</string>
       </property>
@@ -71,7 +71,7 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="pushButton_quit">
       <property name="text">
        <string>Quit</string>
       </property>

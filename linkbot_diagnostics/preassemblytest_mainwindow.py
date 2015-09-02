@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'preassemblytest_mainwindow.ui'
 #
-# Created: Wed Sep  2 15:38:07 2015
+# Created: Wed Sep  2 16:10:59 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,14 +46,14 @@ class Ui_MainWindow(object):
         self.pushButton_motors = QtGui.QPushButton(self.centralwidget)
         self.pushButton_motors.setObjectName(_fromUtf8("pushButton_motors"))
         self.verticalLayout.addWidget(self.pushButton_motors)
-        self.pushButton = QtGui.QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.verticalLayout.addWidget(self.pushButton)
+        self.pushButton_buzzer = QtGui.QPushButton(self.centralwidget)
+        self.pushButton_buzzer.setObjectName(_fromUtf8("pushButton_buzzer"))
+        self.verticalLayout.addWidget(self.pushButton_buzzer)
         spacerItem = QtGui.QSpacerItem(20, 88, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.pushButton_6 = QtGui.QPushButton(self.centralwidget)
-        self.pushButton_6.setObjectName(_fromUtf8("pushButton_6"))
-        self.verticalLayout.addWidget(self.pushButton_6)
+        self.pushButton_quit = QtGui.QPushButton(self.centralwidget)
+        self.pushButton_quit.setObjectName(_fromUtf8("pushButton_quit"))
+        self.verticalLayout.addWidget(self.pushButton_quit)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 480, 25))
@@ -79,8 +79,8 @@ class Ui_MainWindow(object):
         self.pushButton_accelerometer.setText(_translate("MainWindow", "Test Accelerometer", None))
         self.pushButton_encoders.setText(_translate("MainWindow", "Test Encoders", None))
         self.pushButton_motors.setText(_translate("MainWindow", "Test Motors", None))
-        self.pushButton.setText(_translate("MainWindow", "Beep Buzzer", None))
-        self.pushButton_6.setText(_translate("MainWindow", "Quit", None))
+        self.pushButton_buzzer.setText(_translate("MainWindow", "Beep Buzzer", None))
+        self.pushButton_quit.setText(_translate("MainWindow", "Quit", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.actionQuit.setText(_translate("MainWindow", "Quit", None))
 
