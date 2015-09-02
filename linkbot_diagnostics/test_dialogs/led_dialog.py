@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'led_dialog.ui'
 #
-# Created: Wed Sep  2 15:23:45 2015
+# Created: Wed Sep  2 15:27:05 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!

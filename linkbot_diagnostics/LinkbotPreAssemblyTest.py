@@ -30,6 +30,11 @@ try:
 except:
     from linkbot_diagnostics.test_dialogs.button_dialog import Ui_Dialog_button
 
+try:
+    from test_dialogs.accelerometer_dialog import Ui_Dialog_accelerometer
+except:
+    from linkbot_diagnostics.test_dialogs.accelerometer_dialog import Ui_Dialog_accelerometer
+
 class LedDialog(QtGui.QDialog):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -125,6 +130,9 @@ class EncoderDialog(QtGui.QDialog):
         self.linkbot.enableEncoderEvents(5, self.encoderEvent)
         self.encoderSignal.connect(self.processEncoderEvent)
 
+    def __del__(self):
+        self.linkbot.disableEncoderEvents()
+
     def encoderEvent(self, n, angle, timestamp):
         self.encoderSignal.emit(n, angle, timestamp)
 
@@ -150,6 +158,53 @@ class EncoderDialog(QtGui.QDialog):
     def close(self):
         self.done(0)
 
+class AccelerometerDialog(QtGui.QDialog):
+    accelerometerSignal = QtCore.pyqtSignal(float, float, float, int)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_Dialog_accelerometer()
+        self.ui.setupUi(self)
+
+        try:
+            self.linkbot = linkbot.Linkbot()
+        except:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot. Please make sure the Linkbot is "
+                "plugged into the computer with a working Micro-USB cable." )
+            raise 
+
+        for slider in ( self.ui.verticalSlider_1,
+                        self.ui.verticalSlider_2,
+                        self.ui.verticalSlider_3, ):
+            slider.setMaximum(360)
+
+        # Connect button
+        self.ui.pushButton.clicked.connect(self.close)
+
+        self.linkbot.enableAccelerometerEvents(self.accelerometerEvent_)
+        self.accelerometerSignal.connect(self.accelerometerEvent)
+
+    def __del__(self):
+        self.linkbot.disableAccelerometerEvents()
+
+    def accelerometerEvent_(self, x, y, z, timestamp):
+        self.accelerometerSignal.emit(x, y, z, timestamp)
+
+    def accelerometerEvent(self, x, y, z, timestamp):
+        accels = [x,y,z]
+        sliders = [ self.ui.verticalSlider_1,
+                    self.ui.verticalSlider_2,
+                    self.ui.verticalSlider_3, ]
+        labels = [ self.ui.label_1, 
+                   self.ui.label_2, 
+                   self.ui.label_3, ]
+        for a, s, l in zip(accels, sliders, labels):
+            s.setValue(a*100)
+            l.setText('{0:.2f}'.format(a))
+
+    def close(self):
+        self.done(0)
+
 class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -160,6 +215,7 @@ class StartQT4(QtGui.QMainWindow):
         # Connect buttons
         self.ui.pushButton_led.clicked.connect(self.runLedTest)
         self.ui.pushButton_buttons.clicked.connect(self.runButtonTest)
+        self.ui.pushButton_accelerometer.clicked.connect(self.runAccelerometerTest)
         self.ui.pushButton_encoders.clicked.connect(self.runEncoderTest)
 
     def runDialog(self, dialogClass):
@@ -173,11 +229,14 @@ class StartQT4(QtGui.QMainWindow):
     def runLedTest(self):
         self.runDialog(LedDialog)
 
-    def runEncoderTest(self):
-        self.runDialog(EncoderDialog)
-
     def runButtonTest(self):
         self.runDialog(ButtonDialog)
+
+    def runAccelerometerTest(self):
+        self.runDialog(AccelerometerDialog)
+
+    def runEncoderTest(self):
+        self.runDialog(EncoderDialog)
 
 def main():
     app = QtGui.QApplication(sys.argv)
