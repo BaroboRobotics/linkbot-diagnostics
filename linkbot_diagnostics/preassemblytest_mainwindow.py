@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'preassemblytest_mainwindow.ui'
 #
-# Created: Wed Sep  2 11:45:23 2015
+# Created: Wed Sep  2 15:38:07 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,6 +46,9 @@ class Ui_MainWindow(object):
         self.pushButton_motors = QtGui.QPushButton(self.centralwidget)
         self.pushButton_motors.setObjectName(_fromUtf8("pushButton_motors"))
         self.verticalLayout.addWidget(self.pushButton_motors)
+        self.pushButton = QtGui.QPushButton(self.centralwidget)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.verticalLayout.addWidget(self.pushButton)
         spacerItem = QtGui.QSpacerItem(20, 88, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.pushButton_6 = QtGui.QPushButton(self.centralwidget)
@@ -76,6 +79,7 @@ class Ui_MainWindow(object):
         self.pushButton_accelerometer.setText(_translate("MainWindow", "Test Accelerometer", None))
         self.pushButton_encoders.setText(_translate("MainWindow", "Test Encoders", None))
         self.pushButton_motors.setText(_translate("MainWindow", "Test Motors", None))
+        self.pushButton.setText(_translate("MainWindow", "Beep Buzzer", None))
         self.pushButton_6.setText(_translate("MainWindow", "Quit", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.actionQuit.setText(_translate("MainWindow", "Quit", None))

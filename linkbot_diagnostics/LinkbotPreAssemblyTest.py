@@ -35,6 +35,11 @@ try:
 except:
     from linkbot_diagnostics.test_dialogs.accelerometer_dialog import Ui_Dialog_accelerometer
 
+try:
+    from test_dialogs.motor_dialog import Ui_Dialog_motor
+except:
+    from linkbot_diagnostics.test_dialogs.motor_dialog import Ui_Dialog_motor
+
 class LedDialog(QtGui.QDialog):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -205,6 +210,41 @@ class AccelerometerDialog(QtGui.QDialog):
     def close(self):
         self.done(0)
 
+class MotorDialog(QtGui.QDialog):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_Dialog_motor()
+        self.ui.setupUi(self)
+
+        # Connect button signals
+        self.ui.pushButton_positive.clicked.connect(self.positive)
+        self.ui.pushButton_stop.clicked.connect(self.stop)
+        self.ui.pushButton_negative.clicked.connect(self.negative)
+        self.ui.pushButton_close.clicked.connect(self.close)
+
+        try:
+            self.linkbot = linkbot.Linkbot()
+        except:
+            QtGui.QMessageBox.warning(self, "Error",
+                "Could not connect to Linkbot. Please make sure the Linkbot is "
+                "plugged into the computer with a working Micro-USB cable." )
+            raise 
+
+    def __del__(self):
+        self.linkbot.stop()
+
+    def positive(self):
+        self.linkbot.setMotorPowers(128, 128, 128)
+
+    def stop(self):
+        self.linkbot.stop()
+
+    def negative(self):
+        self.linkbot.setMotorPowers(-128, -128, -128)
+
+    def close(self):
+        self.done(0)
+
 class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -217,6 +257,7 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.pushButton_buttons.clicked.connect(self.runButtonTest)
         self.ui.pushButton_accelerometer.clicked.connect(self.runAccelerometerTest)
         self.ui.pushButton_encoders.clicked.connect(self.runEncoderTest)
+        self.ui.pushButton_motors.clicked.connect(self.runMotorTest)
 
     def runDialog(self, dialogClass):
         try:
@@ -237,6 +278,9 @@ class StartQT4(QtGui.QMainWindow):
 
     def runEncoderTest(self):
         self.runDialog(EncoderDialog)
+
+    def runMotorTest(self):
+        self.runDialog(MotorDialog)
 
 def main():
     app = QtGui.QApplication(sys.argv)
