@@ -191,7 +191,7 @@ class StartQT4(QtGui.QDialog):
                           ]
             if any(abs(x) < 210 for x in speeds):
                 self.ui.lineEdit_status.setText('FAIL')
-            elif any(x < 0.99 for x in linearities):
+            elif any(x < 0.93 for x in linearities):
                 self.ui.lineEdit_status.setText('FAIL')
             else:
                 self.ui.lineEdit_status.setText('Pass')
