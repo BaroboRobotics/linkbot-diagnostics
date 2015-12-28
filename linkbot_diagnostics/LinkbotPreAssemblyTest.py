@@ -84,7 +84,7 @@ class ButtonDialog(QtGui.QDialog):
 
         self.ui.pushButton.clicked.connect(self.close)
 
-        self.linkbot.enableButtonEvents(self._buttonEvent)
+        self.linkbot.enable_button_events(self._buttonEvent)
         self.buttonSignal.connect(self.buttonEvent)
 
     def buttonEvent(self, button, state, timestamp):
@@ -97,6 +97,7 @@ class ButtonDialog(QtGui.QDialog):
             checkboxes[button].setChecked(False)
 
     def _buttonEvent(self, button, state, timestamp):
+        print("Button click detected")
         self.buttonSignal.emit(button, state, timestamp)
 
     def close(self):
