@@ -3,7 +3,10 @@
 import sqlite3 as sql
 import sys
 import numpy
-import pylab
+try:
+    import pylab
+except:
+    pass
 
 import os
 import appdirs
@@ -131,13 +134,16 @@ def compareMotorSpecs(cursor):
   print ("Mean R values: {}".format(numpy.mean(Rvalues)))
   print ("Std dev R values: {}".format(numpy.std(Rvalues)))
 
-  #pylab.hist([list(im1fspeeds) + map(abs, im1bspeeds), list(lm1fspeeds) + map(abs, lm1bspeeds)])
-  #pylab.hist([list(im1fspeeds) + map(abs, im1bspeeds), list(im2fspeeds) + map(abs, im2bspeeds)])
-  #pylab.plot([numpy.mean(im1fspeeds), numpy.mean(im1bspeeds)])
-  pylab.hist(speeds)
-  pylab.show()
-  pylab.hist(Rvalues)
-  pylab.show()
+  try:
+      #pylab.hist([list(im1fspeeds) + map(abs, im1bspeeds), list(lm1fspeeds) + map(abs, lm1bspeeds)])
+      #pylab.hist([list(im1fspeeds) + map(abs, im1bspeeds), list(im2fspeeds) + map(abs, im2bspeeds)])
+      #pylab.plot([numpy.mean(im1fspeeds), numpy.mean(im1bspeeds)])
+      pylab.hist(speeds)
+      pylab.show()
+      pylab.hist(Rvalues)
+      pylab.show()
+  except:
+      pass
 
 
 def displayLinkbotData(serialid):
