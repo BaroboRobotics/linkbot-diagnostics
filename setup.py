@@ -3,7 +3,7 @@
 from setuptools import setup
 import re
 
-version = '0.0.6'
+version = '0.0.7'
 
 setup(
     name = "linkbot_diagnostics",
