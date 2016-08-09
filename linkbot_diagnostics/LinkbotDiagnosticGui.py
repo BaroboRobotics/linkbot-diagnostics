@@ -139,10 +139,10 @@ class StartQT4(QtGui.QDialog):
             cur.execute('SELECT * FROM robot_type WHERE Id=\'{}\''.format(linkbot.getSerialId()))
             rows = cur.fetchall()
             formFactor = None
-            if linkbot.getFormFactor() == Linkbot.FormFactor.I:
+            if linkbot.getFormFactor() == linkbot3.FormFactor.I:
                 formFactor = "Linkbot-I"
                 motor2index = 2
-            elif linkbot.getFormFactor() == Linkbot.FormFactor.L:
+            elif linkbot.getFormFactor() == linkbot3.FormFactor.L:
                 formFactor = "Linkbot-L"
                 motor2index = 1
             else:
