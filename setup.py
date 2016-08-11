@@ -3,7 +3,7 @@
 from setuptools import setup
 import re
 
-version = '0.0.8'
+version = '0.1.0'
 
 setup(
     name = "linkbot_diagnostics",
@@ -17,7 +17,7 @@ setup(
          'linkbot-diagnostics-preassembly=linkbot_diagnostics.LinkbotPreAssemblyTest:main',
         ]
     },
-    install_requires = ["PyLinkbot3 >= 3.0.0", "appdirs"],
+    install_requires = ["PyLinkbot3 >= 3.1.1", "appdirs"],
     description = "Tool for testing Linkbots",
     zip_safe = False,
     include_package_data = True,
