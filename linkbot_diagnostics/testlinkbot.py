@@ -1,17 +1,31 @@
 #!/usr/bin/env python3
 
-from linkbot import Linkbot
+from linkbot3 import CLinkbot
 import sys, time
 import numpy 
 
-class TestLinkbot(Linkbot):
+class TestLinkbot(CLinkbot):
   def __init__(self, *args, **kwargs):
-    Linkbot.__init__(self, *args, **kwargs)
+    super().__init__(*args, **kwargs)
+    self._recorded_times = ( [], [], [] )
+    self._recorded_angles = ( [], [], [] ) 
+
+  def recordAnglesBegin(self):
+    self._recorded_times = ( [], [], [] )
+    self._recorded_angles = ( [], [], [] ) 
+    self.motors.set_event_handler(self.__encoder_event)
+
+  def __encoder_event(self, encoder, angle, timestamp):
+    self._recorded_times[encoder].append( timestamp/1000 )
+    self._recorded_angles[encoder].append( angle )
+
+  def recordAnglesEnd(self):
+    return (self._recorded_times, self._recorded_angles)
 
   def runSpeedTest(self):
     self.resetToZero()
-    self.stop()
-    self.setMotorPowers(255, 255, 255)
+    self.motors.stop()
+    self.motors.set_powers([255, 255, 255])
     self.recordAnglesBegin()
     time.sleep(5)
     recordDataForward = self.recordAnglesEnd()
@@ -132,12 +146,12 @@ class TestLinkbot(Linkbot):
         return motorpower
 
 if __name__ == '__main__':
-  if len(sys.argv) == 3:
-    serialID = sys.argv[2]
+  if len(sys.argv) == 2:
+    serialID = sys.argv[1]
   else:
     serialID = 'LOCL'
 
   linkbot = TestLinkbot(serialID)
-  #print(linkbot.runSpeedTest())
-  print(linkbot.runFrictionTest(1, -1, 45))
+  print(linkbot.runSpeedTest())
+  #print(linkbot.runFrictionTest(1, -1, 45))
 

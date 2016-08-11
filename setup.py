@@ -17,7 +17,7 @@ setup(
          'linkbot-diagnostics-preassembly=linkbot_diagnostics.LinkbotPreAssemblyTest:main',
         ]
     },
-    install_requires = ["PyLinkbot >= 2.3.4", "appdirs"],
+    install_requires = ["PyLinkbot3 >= 3.0.0", "appdirs"],
     description = "Tool for testing Linkbots",
     zip_safe = False,
     include_package_data = True,

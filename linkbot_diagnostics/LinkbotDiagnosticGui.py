@@ -3,7 +3,8 @@
 import sqlite3 as sql
 import sys
 
-from linkbot import Linkbot
+import linkbot3
+from linkbot3 import Linkbot
 try:
     from testlinkbot import TestLinkbot
 except:
@@ -69,15 +70,15 @@ class LinkbotDiagnostic():
     self.linkbot = linkbot
     # Check to see if this linkbot is in our database already. Add it if not
     formFactor = None
-    if linkbot.getFormFactor() == Linkbot.FormFactor.I:
+    if linkbot.form_factor() == linkbot3.FormFactor.I:
       formFactor = "Linkbot-I"
       self.motor2index = 2
-    elif linkbot.getFormFactor() == Linkbot.FormFactor.L:
+    elif linkbot.form_factor() == linkbot3.FormFactor.L:
       formFactor = "Linkbot-L"
       self.motor2index = 1
     else:
       formFactor = "UNKNOWN"
-    print ("Testing LinkBot {}".format(linkbot.getSerialId()))
+    print ("Testing LinkBot {}".format(linkbot.serial_id))
 
   def run(self):
     self.runLinearityTest()
@@ -138,10 +139,10 @@ class StartQT4(QtGui.QDialog):
             cur.execute('SELECT * FROM robot_type WHERE Id=\'{}\''.format(linkbot.getSerialId()))
             rows = cur.fetchall()
             formFactor = None
-            if linkbot.getFormFactor() == Linkbot.FormFactor.I:
+            if linkbot.getFormFactor() == linkbot3.FormFactor.I:
                 formFactor = "Linkbot-I"
                 motor2index = 2
-            elif linkbot.getFormFactor() == Linkbot.FormFactor.L:
+            elif linkbot.getFormFactor() == linkbot3.FormFactor.L:
                 formFactor = "Linkbot-L"
                 motor2index = 1
             else:
