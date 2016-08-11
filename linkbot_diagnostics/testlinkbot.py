@@ -20,6 +20,7 @@ class TestLinkbot(CLinkbot):
     self._recorded_angles[encoder].append( angle )
 
   def recordAnglesEnd(self):
+    self.motors.set_event_handler()
     return (self._recorded_times, self._recorded_angles)
 
   def runSpeedTest(self):
