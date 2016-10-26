@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-import linkbot
+import linkbot3 as linkbot
 import time
 import sys
 from PyQt4 import QtCore, QtGui
+
+linkbot.config(use_sfp=True)
 
 try:
     from preassemblytest_mainwindow import Ui_MainWindow
@@ -42,7 +44,7 @@ class LedDialog(QtGui.QDialog):
         self.ui.setupUi(self)
 
         try:
-            self.linkbot = linkbot.Linkbot()
+            self.linkbot = linkbot.CLinkbot('locl')
             self.linkbot.setLedColor(255, 0, 0)
         except:
             QtGui.QMessageBox.warning(self, "Error",
@@ -75,7 +77,7 @@ class ButtonDialog(QtGui.QDialog):
         self.ui.setupUi(self)
 
         try:
-            self.linkbot = linkbot.Linkbot()
+            self.linkbot = linkbot.CLinkbot('locl')
         except:
             QtGui.QMessageBox.warning(self, "Error",
                 "Could not connect to Linkbot. Please make sure the Linkbot is "
@@ -112,7 +114,7 @@ class EncoderDialog(QtGui.QDialog):
         self.ui.setupUi(self)
     
         try:
-            self.linkbot = linkbot.Linkbot()
+            self.linkbot = linkbot.CLinkbot('locl')
         except:
             QtGui.QMessageBox.warning(self, "Error",
                 "Could not connect to Linkbot. Please make sure the Linkbot is "
@@ -167,7 +169,7 @@ class AccelerometerDialog(QtGui.QDialog):
         self.ui.setupUi(self)
 
         try:
-            self.linkbot = linkbot.Linkbot()
+            self.linkbot = linkbot.CLinkbot('locl')
         except:
             QtGui.QMessageBox.warning(self, "Error",
                 "Could not connect to Linkbot. Please make sure the Linkbot is "
@@ -219,7 +221,7 @@ class MotorDialog(QtGui.QDialog):
         self.ui.pushButton_close.clicked.connect(self.close)
 
         try:
-            self.linkbot = linkbot.Linkbot()
+            self.linkbot = linkbot.CLinkbot('locl')
         except:
             QtGui.QMessageBox.warning(self, "Error",
                 "Could not connect to Linkbot. Please make sure the Linkbot is "
@@ -285,7 +287,7 @@ class StartQT4(QtGui.QMainWindow):
 
     def beep(self):
         try:
-            l = linkbot.Linkbot()
+            l = linkbot.CLinkbot('locl')
             l.setBuzzerFrequency(440)
             time.sleep(0.5)
             l.setBuzzerFrequency(0)
