@@ -1,52 +1,14 @@
 #!/usr/bin/env python3
 
-import sqlite3 as sql
+#import sqlite3 as sql
+import os
+import mysql.connector as sql
 import sys
 
 from linkbot import Linkbot
 from testlinkbot import TestLinkbot
 import time
 
-def initialize_tables(cursor):
-  try:
-    cur = cursor
-    cur.execute("CREATE TABLE IF NOT EXISTS robot_type (Id TEXT, "
-          "formfactor TEXT)")
-    cur.execute('CREATE TABLE IF NOT EXISTS speed_tests (Id TEXT, '
-          'Date DATE, '
-          'm1forward SINGLE, '
-          'm1backward SINGLE, '
-          'm2forward SINGLE, '
-          'm2backward SINGLE)')
-
-    cur.execute('CREATE TABLE IF NOT EXISTS linearity_tests (Id TEXT, '
-          'Date DATE, '
-          'm1forward_slope SINGLE, '
-          'm1forward_R SINGLE, '
-          'm1backward_slope SINGLE, '
-          'm1backward_R SINGLE, '
-          'm2forward_slope SINGLE, '
-          'm2forward_R SINGLE, '
-          'm2backward_slope SINGLE, '
-          'm2backward_R SINGLE)')
-
-    cur.execute('CREATE TABLE IF NOT EXISTS static_friction_tests(Id TEXT, '
-          'Date DATE, '
-          'Motor INT, '
-          'Direction INT, '
-          'Angle INT, '
-          'Value INT)')
-
-    """
-    cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
-    rows = cur.fetchall()
-    for row in rows:
-      print row[0]
-    """
-    
-  except sql.Error as e:
-    print ("Error %s:" % e.args[0])
-    sys.exit(1)
 
 class LinkbotDiagnostic():
   def __init__(self, linkbot):
@@ -129,7 +91,7 @@ def main():
   while buttons:
       time.sleep(1)
 
-  con = sql.connect('testlog.db')
+  # con = sql.connect('testlog.db')
   initialize_tables(con.cursor())
   cur = con.cursor()
 # Check to see if this linkbot is in our database already. Add it if not
