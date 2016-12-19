@@ -130,7 +130,7 @@ class EncoderDialog(QtGui.QDialog):
         self.ui.pushButton.clicked.connect(self.close)
 
         # Connect encoder callbacks
-        self.linkbot.enableEncoderEvents(5, self.encoderEvent)
+        self.linkbot.enableEncoderEvents(self.encoderEvent)
         self.encoderSignal.connect(self.processEncoderEvent)
 
     def __del__(self):
@@ -148,13 +148,13 @@ class EncoderDialog(QtGui.QDialog):
             return theta
         angle_ = angle
         angle = normalizeAngle(angle)
-        if n == 1:
+        if n == 0:
             self.ui.verticalSlider_1.setValue(angle)
             self.ui.label_1.setText('{0:.2f}'.format(angle_))
-        elif n == 2:
+        elif n == 1:
             self.ui.verticalSlider_2.setValue(angle)
             self.ui.label_2.setText('{0:.2f}'.format(angle_))
-        elif n == 3:
+        elif n == 2:
             self.ui.verticalSlider_3.setValue(angle)
             self.ui.label_3.setText('{0:.2f}'.format(angle_))
 
