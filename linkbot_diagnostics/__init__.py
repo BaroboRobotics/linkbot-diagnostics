@@ -142,6 +142,10 @@ class Database() :
         if len(rows) == 0:
             self.cursor.execute('INSERT INTO robot_type VALUES(\'{}\', \'{}\')'.format(
                 linkbot.serial_id, formFactor))
+
+    def fetch_all(self, sql_statement):
+        self.cursor.execute(sql_statement)
+        return self.cursor.fetchall()
                 
     def __enter__(self):
         return self
