@@ -96,9 +96,10 @@ class Database() :
                    f2_slope,
                    f2_r,
                    b2_slope,
-                   b2_r ):
+                   b2_r,
+                   notes='' ):
         self.cursor.execute("INSERT INTO linearity_tests "
-            "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, {}, {})".format(
+            "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, {}, {}, {})".format(
         serial_id,
         date,
         f1_slope,
@@ -108,7 +109,8 @@ class Database() :
         f2_slope,
         f2_r,
         b2_slope,
-        b2_r) )
+        b2_r,
+        notes) )
 
     def insert_robot_friction( self, 
                                serial_id, 
