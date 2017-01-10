@@ -99,7 +99,7 @@ class Database() :
                    b2_r,
                    notes='' ):
         self.cursor.execute("INSERT INTO linearity_tests "
-            "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, {}, {}, {})".format(
+            "VALUES('{}', '{}', {}, {}, {}, {}, {}, {}, {}, {}, '{}')".format(
         serial_id,
         date,
         f1_slope,
