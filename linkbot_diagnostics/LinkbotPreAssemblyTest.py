@@ -5,8 +5,6 @@ import time
 import sys
 from PyQt4 import QtCore, QtGui
 
-linkbot.config(use_sfp=True)
-
 try:
     from preassemblytest_mainwindow import Ui_MainWindow
 except:
